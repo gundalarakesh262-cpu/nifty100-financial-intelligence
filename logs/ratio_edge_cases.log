@@ -1,0 +1,12 @@
+Ratio Engine Edge Case Summary
+========================================
+
+total_rows: 1137
+total_columns: 62
+duplicate_company_year_rows: 0
+debt_free_companies_rows: 81
+negative_equity_rows: 0
+fcf_negative_3yr_rows: 98
+missing_market_cap_rows: 596
+missing_pe_ratio_rows: 596
+missing_interest_coverage_rows: 43
