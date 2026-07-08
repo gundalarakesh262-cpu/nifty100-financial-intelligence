@@ -1,0 +1,4 @@
+company_id,company_name,broad_sector,composite_quality_score,return_on_equity_pct,return_on_capital_employed_pct,net_profit_margin_pct,free_cash_flow_cr,cash_from_operations_cr,cfo_to_pat,revenue_cagr_5y_pct,pat_cagr_5y_pct,eps_cagr_5y_pct,debt_to_equity,interest_coverage,pe_ratio,pb_ratio,dividend_yield_pct,dividend_payout_ratio_pct,market_cap_crore,revenue
+ICICIBANK,ICICI Bank Ltd,Financials,3.413207178663657,17.99027109750765,,28.8880112339828,12547,157284,,17.25086850260209,51.94877118224903,55.18455739153598,6.445624336310825,1.301063746373592,,,,16,,
+CANBK,Canara Bank,Financials,0.976949548730602,16.71605179468811,,13.93516047014541,13296,15046,,18.17561078322378,85.77528500681741,53.4206382524911,14.86741992554243,1.610905536549605,,,,19,,
+SIEMENS,Siemens Ltd,Industrials,0.6144223693892568,17.69876929087712,,12.22122302158273,1168,1670,,11.1933589020679,19.85339817550189,19.64385000375561,0.01816761086149639,51.73333333333333,,,,16,,

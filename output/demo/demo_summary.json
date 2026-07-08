@@ -1,0 +1,10 @@
+{
+  "included": [
+    "output\\demo\\screener_output.xlsx",
+    "output\\demo\\preset_csvs",
+    "output\\demo\\peer_comparison_percentile_formatted.xlsx",
+    "output\\demo\\peer_percentiles.sqlite",
+    "output\\demo\\radar_charts",
+    "output\\demo\\spotchecks"
+  ]
+}
