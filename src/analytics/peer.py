@@ -124,12 +124,22 @@ def generate_peer_comparison_excel(
     ]
 
     ranks = merged.copy()
+    # compute percentiles per peer group but ensure the result aligns with ranks.index
     for metric in metrics:
         if metric in ranks.columns:
-            percentile_series = ranks.groupby('peer_group_name', dropna=False)[metric].apply(
-                lambda series: percentile_rank(series, higher_is_better=(metric != 'debt_to_equity'))
-            )
-            ranks[f'{metric}_percentile'] = percentile_series.reindex(ranks.index).fillna(50)
+            percentile_series = pd.Series(index=ranks.index, dtype=float)
+            for group_name, group in ranks.groupby('peer_group_name', dropna=False):
+                idx = group.index
+                series = pd.to_numeric(group[metric], errors='coerce')
+                if series.dropna().empty:
+                    percentile_series.loc[idx] = 50.0
+                else:
+                    ranks_pct = series.rank(pct=True, method='max')
+                    if metric != 'debt_to_equity':
+                        percentile_series.loc[idx] = ranks_pct.fillna(0) * 100.0
+                    else:
+                        percentile_series.loc[idx] = (1 - ranks_pct).fillna(0) * 100.0
+            ranks[f'{metric}_percentile'] = percentile_series.fillna(50.0)
         else:
             ranks[f'{metric}_percentile'] = None
 

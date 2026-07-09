@@ -29,7 +29,7 @@ def format_value(value):
 
 def show() -> None:
     st.title("🏢 Company Profile")
-    st.write("Explore company metrics from the Day 16 screener universe.")
+    st.write("Explore company metrics from the latest screener universe.")
 
     df = load_screener_data()
     if df.empty:

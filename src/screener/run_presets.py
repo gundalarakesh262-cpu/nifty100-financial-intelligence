@@ -105,7 +105,7 @@ def run_and_export(config_path: str,
         df_out[cols].to_excel(writer, sheet_name=preset_name[:31], index=False)
         summary[preset_name] = len(df_out)
 
-    writer.save()
+    # pandas openpyxl writer no longer exposes `save()`; close the writer instead
     writer.close()
     return summary
 

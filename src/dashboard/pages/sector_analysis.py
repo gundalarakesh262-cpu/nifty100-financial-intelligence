@@ -21,11 +21,11 @@ def load_screener_data() -> pd.DataFrame:
 
 def show() -> None:
     st.title("📊 Sector Analysis")
-    st.write("Analyze sector-level trends for the Day 16 screener universe.")
+    st.write("Analyze sector-level trends for the latest screener universe.")
 
     df = load_screener_data()
     if df.empty:
-        st.warning("Screener data is not available. Generate output/screener_full_ranked_universe.csv first.")
+        st.warning("Screener data is not available. Run the pipeline to generate output/screener_full_ranked_universe.csv.")
         return
 
     sectors = sorted(df['broad_sector'].dropna().unique())

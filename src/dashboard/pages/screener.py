@@ -15,12 +15,25 @@ def load_screener_data() -> pd.DataFrame:
     df['company_id'] = df['company_id'].astype(str).str.strip().str.upper()
 
     if 'company_name' in df.columns:
-        df['company_name'] = df['company_name'].replace({'nan': pd.NA}).fillna(df['company_id'])
+        df['company_name'] = (
+            df['company_name']
+            .replace({'nan': pd.NA})
+            .fillna(df['company_id'])
+            .astype(str)
+            .str.strip()
+        )
     else:
         df['company_name'] = df['company_id']
 
+    # Compose broad sector from either source column and ensure a displayable default
     df['broad_sector'] = df.get('broad_sector_y').fillna(df.get('broad_sector_x'))
-    df['broad_sector'] = df['broad_sector'].replace({'nan': pd.NA})
+    df['broad_sector'] = (
+        df['broad_sector']
+        .replace({'nan': pd.NA})
+        .fillna('Unknown')
+        .astype(str)
+        .str.strip()
+    )
     df['sub_sector'] = df.get('sub_sector', pd.NA)
 
     numeric_cols = [
@@ -55,47 +68,60 @@ def to_excel_bytes(df: pd.DataFrame) -> bytes:
 
 def show() -> None:
     st.title("🔍 Live Investment Screener")
-    st.write("Filter the Day 16 screener universe and download selected results.")
+    st.write("Filter the latest screener universe and download selected results.")
 
     df = load_screener_data()
     if df.empty:
-        st.warning("Screener data is not available. Run the Day 16 pipeline to generate output/screener_full_ranked_universe.csv.")
+        st.warning("Screener data is not available. Run the pipeline to generate output/screener_full_ranked_universe.csv.")
         return
 
-    sector_candidates = ['All'] + sorted(df['broad_sector'].dropna().unique().astype(str).tolist())
-    peer_candidates = ['All'] + sorted(df['peer_group_name'].dropna().unique().astype(str).tolist())
+    # Helper to safely get numeric stats when columns may be missing
+    def _safe_series_stats(df, col, min_default=0.0, max_default=100.0):
+        import pandas as _pd
+        if col in df.columns:
+            s = _pd.to_numeric(df[col], errors='coerce').dropna()
+            if not s.empty:
+                return float(s.min()), float(s.quantile(0.25)), float(s.max())
+        return float(min_default), float((min_default + max_default) / 4.0), float(max_default)
+
+    sector_candidates = ['All'] + sorted(df['broad_sector'].dropna().unique().astype(str).tolist()) if 'broad_sector' in df.columns else ['All']
+    peer_candidates = ['All'] + sorted(df['peer_group_name'].dropna().unique().astype(str).tolist()) if 'peer_group_name' in df.columns else ['All']
 
     st.markdown("---")
     with st.expander("Filter settings", expanded=True):
         col1, col2, col3 = st.columns(3)
 
         with col1:
+            roe_min_min, roe_min_q25, roe_min_max = _safe_series_stats(df, 'return_on_equity_pct', min_default=0.0, max_default=50.0)
             roe_min = st.slider(
                 "Min ROE (%)",
-                float(df['return_on_equity_pct'].min(skipna=True)),
-                float(df['return_on_equity_pct'].max(skipna=True)),
-                float(max(0.0, df['return_on_equity_pct'].quantile(0.25)))
+                roe_min_min,
+                roe_min_max,
+                max(0.0, roe_min_q25)
             )
+            npm_min_min, npm_min_q25, npm_min_max = _safe_series_stats(df, 'net_profit_margin_pct', min_default=0.0, max_default=30.0)
             npm_min = st.slider(
                 "Min Net Profit Margin (%)",
-                float(df['net_profit_margin_pct'].min(skipna=True)),
-                float(df['net_profit_margin_pct'].max(skipna=True)),
-                float(max(0.0, df['net_profit_margin_pct'].quantile(0.25)))
+                npm_min_min,
+                npm_min_max,
+                max(0.0, npm_min_q25)
             )
             sector = st.selectbox("Sector", sector_candidates, index=0)
 
         with col2:
+            de_min, de_q25, de_max_default = _safe_series_stats(df, 'debt_to_equity', min_default=0.0, max_default=10.0)
             de_max = st.slider(
                 "Max Debt/Equity",
                 0.0,
-                float(min(10.0, df['debt_to_equity'].dropna().max() or 10.0)),
-                float(min(3.0, df['debt_to_equity'].dropna().quantile(0.75) or 3.0))
+                max(1.0, de_max_default),
+                min(3.0, max(1.0, de_q25))
             )
+            pe_min, pe_q25, pe_max_default = _safe_series_stats(df, 'pe_ratio', min_default=0.0, max_default=100.0)
             pe_max = st.slider(
                 "Max P/E",
                 0.0,
-                float(min(100.0, df['pe_ratio'].dropna().max() or 100.0)),
-                float(min(30.0, df['pe_ratio'].dropna().quantile(0.75) or 30.0))
+                max(10.0, pe_max_default),
+                min(30.0, max(10.0, pe_q25))
             )
             peer_group = st.selectbox("Peer Group", peer_candidates, index=0)
 
@@ -106,10 +132,14 @@ def show() -> None:
             text_search = st.text_input("Search by company name or ticker")
 
     filtered = df.copy()
-    filtered = filtered[filtered['return_on_equity_pct'].fillna(-999) >= roe_min]
-    filtered = filtered[filtered['net_profit_margin_pct'].fillna(-999) >= npm_min]
-    filtered = filtered[filtered['debt_to_equity'].fillna(999) <= de_max]
-    filtered = filtered[filtered['pe_ratio'].fillna(999) <= pe_max]
+    if 'return_on_equity_pct' in filtered.columns:
+        filtered = filtered[filtered['return_on_equity_pct'].fillna(-999) >= roe_min]
+    if 'net_profit_margin_pct' in filtered.columns:
+        filtered = filtered[filtered['net_profit_margin_pct'].fillna(-999) >= npm_min]
+    if 'debt_to_equity' in filtered.columns:
+        filtered = filtered[filtered['debt_to_equity'].fillna(999) <= de_max]
+    if 'pe_ratio' in filtered.columns:
+        filtered = filtered[filtered['pe_ratio'].fillna(999) <= pe_max]
 
     if sector != 'All':
         filtered = filtered[filtered['broad_sector'] == sector]
@@ -131,7 +161,7 @@ def show() -> None:
     st.subheader("Screener Results")
 
     st.write(
-        f"Showing {len(filtered)} companies from the Day 16 screener universe. "
+        f"Showing {len(filtered)} companies from the latest screener universe. "
         "Download the filtered subset below."
     )
 
@@ -155,10 +185,12 @@ def show() -> None:
     ]
     visible_cols = [c for c in display_cols if c in filtered.columns]
 
-    st.dataframe(filtered[visible_cols].reset_index(drop=True), use_container_width=True)
+    # Replace NaNs in the displayed subset with a friendly placeholder
+    display_df = filtered[visible_cols].reset_index(drop=True).fillna('Unknown')
+    st.dataframe(display_df, use_container_width=True)
 
-    csv_data = filtered.to_csv(index=False).encode('utf-8')
-    excel_data = to_excel_bytes(filtered[visible_cols])
+    csv_data = display_df.to_csv(index=False).encode('utf-8')
+    excel_data = to_excel_bytes(display_df)
 
     col1, col2 = st.columns(2)
     col1.download_button(
@@ -175,4 +207,4 @@ def show() -> None:
     )
 
     st.markdown("---")
-    st.caption("Data loaded from output/screener_full_ranked_universe.csv | Day 16 live screener")
+    st.caption("Data loaded from output/screener_full_ranked_universe.csv | Latest live screener")
