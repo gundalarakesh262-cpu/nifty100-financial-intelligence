@@ -96,8 +96,6 @@ def write_peer_percentiles_sqlite(df: pd.DataFrame, db_path: str = 'nifty100.db'
     path.parent.mkdir(parents=True, exist_ok=True)
     with sqlite3.connect(str(path)) as conn:
         df.to_sql('peer_percentiles', conn, if_exists='replace', index=False)
-
-
 def generate_peer_comparison_excel(
     df: pd.DataFrame,
     peer_groups: pd.DataFrame,
@@ -108,85 +106,194 @@ def generate_peer_comparison_excel(
 
     if 'company_id' in df.columns:
         df['company_id'] = df['company_id'].astype(str).str.strip().str.upper()
+
+    peer_groups = peer_groups.copy()
+    peer_groups['company_id'] = peer_groups['company_id'].astype(str).str.strip().str.upper()
+
     merged = attach_peer_groups(df, peer_groups)
 
+    # Day 20 requires 20 metric columns
     metrics = [
         'return_on_equity_pct',
         'return_on_capital_employed_pct',
+        'return_on_assets_pct',
         'net_profit_margin_pct',
+        'operating_profit_margin_pct',
         'debt_to_equity',
-        'free_cash_flow_cr',
-        'pat_cagr_5y_pct',
-        'revenue_cagr_5y_pct',
-        'eps_cagr_5y_pct',
         'interest_coverage',
         'asset_turnover',
+        'net_debt_cr',
+        'free_cash_flow_cr',
+        'capex_cr',
+        'cash_from_operations_cr',
+        'earnings_per_share',
+        'book_value_per_share',
+        'dividend_payout_ratio_pct',
+        'revenue_cagr_5y_pct',
+        'pat_cagr_5y_pct',
+        'eps_cagr_5y_pct',
+        'pe_ratio',
+        'pb_ratio',
     ]
 
-    ranks = merged.copy()
+    lower_is_better_metrics = {
+        'debt_to_equity',
+        'net_debt_cr',
+        'capex_cr',
+        'pe_ratio',
+        'pb_ratio',
+    }
+
+    # Ensure all 20 metric columns exist, even if some are blank
     for metric in metrics:
-        if metric in ranks.columns:
-            percentile_series = ranks.groupby('peer_group_name', dropna=False)[metric].apply(
-                lambda series: percentile_rank(series, higher_is_better=(metric != 'debt_to_equity'))
-            )
-            ranks[f'{metric}_percentile'] = percentile_series.reindex(ranks.index).fillna(50)
-        else:
-            ranks[f'{metric}_percentile'] = None
+        if metric not in merged.columns:
+            merged[metric] = np.nan
+
+    if 'company_name' not in merged.columns:
+        merged['company_name'] = merged['company_id']
+
+    ranks = merged.copy()
+
+    # Calculate percentile rank within each peer group
+    for metric in metrics:
+        higher_is_better = metric not in lower_is_better_metrics
+
+        ranks[f'{metric}_percentile'] = (
+            ranks
+            .groupby('peer_group_name', dropna=False)[metric]
+            .transform(lambda series: percentile_rank(series, higher_is_better=higher_is_better))
+            .fillna(50)
+        )
 
     with pd.ExcelWriter(output_file, engine='openpyxl') as writer:
         for group_name, group in ranks.groupby('peer_group_name'):
             if pd.isna(group_name):
                 continue
+
             sheet_name = str(group_name)[:31]
-            cols = [
-                'company_id',
-                'company_name',
-            ] + metrics + [f'{metric}_percentile' for metric in metrics]
-            subset = group[[c for c in cols if c in group.columns]]
-            medians = subset.median(numeric_only=True)
-            subset.loc['Peer Group Median'] = medians
+
+            cols = (
+                ['company_id', 'company_name']
+                + metrics
+                + [f'{metric}_percentile' for metric in metrics]
+            )
+
+            subset = group[cols].copy()
+
+            # Add proper median row at bottom
+            median_row = {col: '' for col in subset.columns}
+            median_row['company_id'] = 'MEDIAN'
+            median_row['company_name'] = 'Peer Group Median'
+
+            for metric in metrics:
+                median_row[metric] = pd.to_numeric(subset[metric], errors='coerce').median()
+
+            subset = pd.concat(
+                [subset, pd.DataFrame([median_row])],
+                ignore_index=True
+            )
+
             subset.to_excel(writer, sheet_name=sheet_name, index=False)
 
-    # Apply conditional formatting and highlight benchmark row after saving
+    # Apply conditional formatting and benchmark highlight
     workbook = load_workbook(output_file)
+
     green_fill = PatternFill(start_color='C6EFCE', end_color='C6EFCE', fill_type='solid')
     yellow_fill = PatternFill(start_color='FFEB9C', end_color='FFEB9C', fill_type='solid')
     red_fill = PatternFill(start_color='FFC7CE', end_color='FFC7CE', fill_type='solid')
     gold_fill = PatternFill(start_color='FFD966', end_color='FFD966', fill_type='solid')
+    header_fill = PatternFill(start_color='1F4E78', end_color='1F4E78', fill_type='solid')
+    median_fill = PatternFill(start_color='D9EAF7', end_color='D9EAF7', fill_type='solid')
+
+    white_bold_font = Font(bold=True, color='FFFFFF')
     bold_font = Font(bold=True)
 
     for sheet_name in workbook.sheetnames:
         sheet = workbook[sheet_name]
-        headers = [cell.value for cell in next(sheet.iter_rows(min_row=1, max_row=1))]
-        percentile_cols = [i + 1 for i, h in enumerate(headers) if isinstance(h, str) and h.endswith('_percentile')]
-        company_col = next((i + 1 for i, h in enumerate(headers) if h == 'company_id'), None)
-        benchmark_ids = set(peer_groups.loc[peer_groups['peer_group_name'] == sheet_name, 'company_id'].astype(str))
 
-        for row in sheet.iter_rows(min_row=2, max_row=sheet.max_row, min_col=1, max_col=sheet.max_column):
-            company_id = str(row[company_col - 1].value).strip() if company_col else ''
-            is_benchmark = company_id in benchmark_ids
+        headers = [cell.value for cell in next(sheet.iter_rows(min_row=1, max_row=1))]
+
+        percentile_cols = [
+            i + 1
+            for i, h in enumerate(headers)
+            if isinstance(h, str) and h.endswith('_percentile')
+        ]
+
+        company_col = next(
+            (i + 1 for i, h in enumerate(headers) if h == 'company_id'),
+            None
+        )
+
+        # Header styling
+        for cell in sheet[1]:
+            cell.fill = header_fill
+            cell.font = white_bold_font
+
+        # Correct benchmark IDs only
+        benchmark_ids = set(
+            peer_groups.loc[
+                (peer_groups['peer_group_name'].astype(str).str[:31] == sheet_name)
+                & (
+                    peer_groups['is_benchmark']
+                    .astype(str)
+                    .str.lower()
+                    .isin(['true', '1', 'yes'])
+                ),
+                'company_id'
+            ]
+            .astype(str)
+            .str.strip()
+            .str.upper()
+        )
+
+        for row_idx in range(2, sheet.max_row + 1):
+            company_id = ''
+            if company_col:
+                company_id = str(sheet.cell(row=row_idx, column=company_col).value).strip().upper()
+
+            # Median row styling
+            if company_id == 'MEDIAN':
+                for col_idx in range(1, sheet.max_column + 1):
+                    sheet.cell(row=row_idx, column=col_idx).fill = median_fill
+                    sheet.cell(row=row_idx, column=col_idx).font = bold_font
+                continue
+
+            # Percentile colouring
             for col_idx in percentile_cols:
-                cell = row[col_idx - 1]
-                val = cell.value
+                cell = sheet.cell(row=row_idx, column=col_idx)
+
                 try:
-                    pct = float(val)
+                    pct = float(cell.value)
                 except Exception:
                     continue
+
                 if pct >= 75:
                     cell.fill = green_fill
                 elif pct <= 25:
                     cell.fill = red_fill
                 else:
                     cell.fill = yellow_fill
-            if is_benchmark:
-                for cell in row:
-                    cell.fill = gold_fill
-                    cell.font = bold_font
+
+                cell.number_format = '0.0'
+
+            # Highlight benchmark row
+            if company_id in benchmark_ids:
+                for col_idx in range(1, sheet.max_column + 1):
+                    sheet.cell(row=row_idx, column=col_idx).fill = gold_fill
+                    sheet.cell(row=row_idx, column=col_idx).font = bold_font
+
+        # Formatting
+        sheet.freeze_panes = 'C2'
+        sheet.auto_filter.ref = sheet.dimensions
 
         for col_idx in range(1, sheet.max_column + 1):
-            sheet.column_dimensions[get_column_letter(col_idx)].auto_size = True
+            sheet.column_dimensions[get_column_letter(col_idx)].width = 18
+
+        sheet.column_dimensions['A'].width = 16
+        sheet.column_dimensions['B'].width = 32
 
     workbook.save(output_file)
+
 
 
 def generate_radar_charts(
