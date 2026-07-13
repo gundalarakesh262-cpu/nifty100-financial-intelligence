@@ -2,6 +2,7 @@ import sys
 from pathlib import Path
 
 import pandas as pd
+import plotly.express as px
 import streamlit as st
 
 # MUST be the first Streamlit command
@@ -99,46 +100,88 @@ if page == "Home":
         st.markdown("---")
         st.write("Use the sidebar to navigate to Company Profile, Screener, Sector Analysis, Trends, or Reports once the data is available.")
     else:
-        company_count = (
-            screener_df['company_id'].astype(str).str.strip().str.upper().nunique()
-            if 'company_id' in screener_df.columns else 0
+        screener_df = screener_df.copy()
+        screener_df['year_only'] = screener_df['year'].astype(str).str.extract(r"(\d{4})")[0].astype(str)
+        year_choices = [str(y) for y in range(2019, 2025)]
+        latest_year = screener_df['year_only'].dropna().max() if not screener_df['year_only'].dropna().empty else "2024"
+        selected_year = st.selectbox(
+            "Select year",
+            year_choices,
+            index=year_choices.index(latest_year) if latest_year in year_choices else len(year_choices) - 1,
         )
-        sector_series = screener_df.get('broad_sector_y').fillna(screener_df.get('broad_sector_x')) if not screener_df.empty else pd.Series(dtype='object')
-        sector_count = sector_series.dropna().nunique()
-        year_series = screener_df['year'].astype(str).str.extract(r"(\d{4})")[0] if 'year' in screener_df.columns else pd.Series(dtype='object')
-        latest_year = year_series.dropna().max() if not year_series.dropna().empty else "N/A"
-        preset_count = len(presets_df) if not presets_df.empty else 0
-        top_preset_label = "N/A"
-        top_preset_size = 0
-        if not presets_df.empty and 'preset_name' in presets_df.columns and 'company_count' in presets_df.columns:
-            top_preset = presets_df.sort_values('company_count', ascending=False).head(1)
-            if not top_preset.empty:
-                top_preset_label = top_preset.iloc[0]['preset_name']
-                top_preset_size = int(top_preset.iloc[0]['company_count'])
 
-        left, middle, right = st.columns(3)
-        left.metric("Total tracked companies", f"{company_count:,}")
-        middle.metric("Latest year", latest_year)
-        right.metric("Sectors available", f"{sector_count:,}")
+        year_df = screener_df[screener_df['year_only'] == selected_year].copy()
+        if year_df.empty:
+            st.warning(f"No screener data available for {selected_year}. Try another year.")
 
-        left, middle, right = st.columns(3)
-        left.metric("Preset definitions", f"{preset_count:,}")
-        middle.metric("Largest preset", top_preset_label)
-        right.metric("Largest preset size", f"{top_preset_size:,}" if top_preset_size else "N/A")
+        year_df['broad_sector'] = year_df.get('broad_sector_y').fillna(year_df.get('broad_sector_x')).fillna('Unknown')
+        year_df['peer_group_name'] = year_df.get('peer_group_name', pd.NA)
+        year_df['return_on_equity_pct'] = pd.to_numeric(year_df.get('return_on_equity_pct'), errors='coerce')
+        year_df['net_profit_margin_pct'] = pd.to_numeric(year_df.get('net_profit_margin_pct'), errors='coerce')
+        year_df['composite_score'] = pd.to_numeric(year_df.get('composite_score'), errors='coerce')
 
-        st.caption(f"Preset source: {preset_source} — {data_info} — {excel_info}")
+        total_companies = year_df['company_id'].astype(str).str.strip().str.upper().nunique() if not year_df.empty else 0
+        total_sectors = year_df['broad_sector'].dropna().nunique() if not year_df.empty else 0
+        avg_roe = year_df['return_on_equity_pct'].mean() if 'return_on_equity_pct' in year_df.columns else None
+        avg_npm = year_df['net_profit_margin_pct'].mean() if 'net_profit_margin_pct' in year_df.columns else None
+        avg_composite = year_df['composite_score'].mean() if 'composite_score' in year_df.columns else None
+        top_sector = year_df['broad_sector'].value_counts().idxmax() if not year_df.empty else "N/A"
 
-        if not presets_df.empty:
+        st.subheader(f"Year snapshot: {selected_year}")
+        row1, row2 = st.columns(2)
+        with row1:
+            col1, col2, col3 = st.columns(3)
+            col1.metric("Total companies", f"{total_companies:,}")
+            col2.metric("Sectors", f"{total_sectors:,}")
+            col3.metric("Top sector", top_sector)
+        with row2:
+            col4, col5, col6 = st.columns(3)
+            col4.metric("Avg ROE (%)", f"{avg_roe:.2f}" if avg_roe is not None and not pd.isna(avg_roe) else "N/A")
+            col5.metric("Avg NPM (%)", f"{avg_npm:.2f}" if avg_npm is not None and not pd.isna(avg_npm) else "N/A")
+            col6.metric("Avg Composite Score", f"{avg_composite:.2f}" if avg_composite is not None and not pd.isna(avg_composite) else "N/A")
+
+        if not year_df.empty:
             st.markdown("---")
-            st.subheader("Preset coverage snapshot")
-            summary_df = presets_df.rename(columns={'preset_name': 'Preset', 'company_count': 'Count'})
-            st.dataframe(summary_df.head(10), use_container_width=True)
+            st.subheader("Sector distribution")
+            sector_counts = (
+                year_df['broad_sector'].fillna('Unknown').value_counts().reset_index()
+                    .rename(columns={'index': 'broad_sector', 'broad_sector': 'count'})
+            )
+            fig = px.pie(
+                sector_counts,
+                names='broad_sector',
+                values='count',
+                hole=0.45,
+                title=f"Sector share in {selected_year}",
+            )
+            fig.update_traces(textinfo='percent+label')
+            st.plotly_chart(fig, use_container_width=True)
+
+            st.markdown("---")
+            st.subheader("Top 5 companies by composite score")
+            top_quality_cols = [
+                'company_id',
+                'company_name',
+                'broad_sector',
+                'composite_score',
+                'return_on_equity_pct',
+                'net_profit_margin_pct',
+                'revenue_cagr_5y_pct',
+            ]
+            top_quality_cols = [c for c in top_quality_cols if c in year_df.columns]
+            if top_quality_cols:
+                top_quality_df = year_df.sort_values(by='composite_score', ascending=False).head(5)[top_quality_cols]
+                st.dataframe(top_quality_df.reset_index(drop=True), use_container_width=True)
+            else:
+                st.info("Composite score data is unavailable for the selected year.")
 
         st.markdown("---")
         st.subheader("Quick screener model")
-        screener_df = screener_df.copy()
+
         screener_df['broad_sector'] = screener_df.get('broad_sector_y').fillna(screener_df.get('broad_sector_x')).fillna('Unknown')
         screener_df['peer_group_name'] = screener_df.get('peer_group_name', pd.NA)
+        screener_df['return_on_equity_pct'] = pd.to_numeric(screener_df.get('return_on_equity_pct'), errors='coerce')
+        screener_df['debt_to_equity'] = pd.to_numeric(screener_df.get('debt_to_equity'), errors='coerce')
 
         sector_choices = ['All'] + sorted(screener_df['broad_sector'].dropna().unique().astype(str).tolist())
         peer_choices = ['All'] + sorted(screener_df['peer_group_name'].dropna().unique().astype(str).tolist())
@@ -155,9 +198,6 @@ if page == "Home":
                 top_n = st.slider("Top N", 5, 20, 10)
                 search = st.text_input("Search company or ticker")
 
-        screener_df['return_on_equity_pct'] = pd.to_numeric(screener_df.get('return_on_equity_pct'), errors='coerce')
-        screener_df['debt_to_equity'] = pd.to_numeric(screener_df.get('debt_to_equity'), errors='coerce')
-
         filtered = screener_df
         if selected_sector != 'All':
             filtered = filtered[filtered['broad_sector'] == selected_sector]
@@ -172,6 +212,7 @@ if page == "Home":
             ).any(axis=1)]
 
         filtered = filtered.sort_values(by='composite_score', ascending=False).head(top_n)
+
         st.markdown("---")
         st.write(f"Showing {len(filtered)} results from the latest screener universe.")
 
