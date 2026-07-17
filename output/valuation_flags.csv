@@ -1,0 +1,88 @@
+Company ID,Company,Sector,Free Cash Flow,EPS,Book Value,FCF Yield Score,PE Flag,Valuation,Composite Score
+AGTL,AGTL,,203.0,,,50,Cheap,Overvalued,58.415841584158414
+PNB,Punjab National Bank,Financials,-29445.0,8.0,110.0,50,Cheap,Overvalued,57.263382220575
+JIOFIN,Jio Financial Services Ltd,Financials,0.0,,216.0,50,Cheap,Overvalued,53.18599717114569
+NAUKRI,Info Edge (India) Ltd,Communication Services,0.0,,3225.0,50,Cheap,Overvalued,50.98377694912348
+ICICIPRULI,ICICI Prudential Life Insurance Company Ltd,Financials,0.0,,80.0,50,Cheap,Overvalued,50.826817135495055
+SBILIFE,SBI Life Insurance Company Ltd,Financials,0.0,,162.0,50,Cheap,Overvalued,50.826817135495055
+ICICIGI,ICICI Lombard General Insurance Company Ltd,Financials,0.0,,275.0,50,Cheap,Overvalued,50.826817135495055
+LICI,Life Insurance Corporation of India,Financials,0.0,,154.0,50,Cheap,Overvalued,50.43077753153466
+DIVISLAB,Divis Laboratories Ltd,Healthcare,0.0,,517.0,50,Cheap,Overvalued,50.33176763054456
+INDIGO,Interglobe Aviation Ltd,Consumer Discretionary,0.0,,97.0,50,Cheap,Overvalued,50.29070764219279
+BAJAJHLDNG,Bajaj Holdings & Investment Ltd,Financials,0.0,,5375.0,50,Cheap,Overvalued,50.232757729554464
+MARUTI,Maruti Suzuki India Ltd,Consumer Discretionary,0.0,,2835.0,50,Cheap,Overvalued,50.13374782856436
+BOSCHLTD,Bosch Ltd,Consumer Discretionary,0.0,,4319.0,50,Cheap,Overvalued,50.03473792757426
+ITC,ITC Ltd,Consumer Staples,0.0,,60.0,50,Cheap,Overvalued,49.935728026584165
+IRCTC,Indian Railway Catering & Tourism Corporation Ltd,Consumer Discretionary,0.0,,44.0,50,Cheap,Overvalued,49.638698323613866
+AMBUJACEM,Ambuja Cements Ltd,Materials,0.0,,205.0,50,Cheap,Overvalued,49.53968842262377
+CIPLA,Cipla Ltd,Healthcare,0.0,,351.0,50,Cheap,Overvalued,49.44067852163367
+ABB,Abbott India Ltd,Industrials,0.0,,1657.0,50,Cheap,Overvalued,49.34166862064357
+EICHERMOT,Eicher Motors Ltd,Consumer Discretionary,0.0,,693.0,50,Cheap,Overvalued,49.04463891767328
+HEROMOTOCO,Hero MotoCorp Ltd,Consumer Discretionary,0.0,,951.0,50,Cheap,Overvalued,48.94562901668318
+HINDUNILVR,Hindustan Unilever Ltd,Consumer Staples,0.0,,216.0,50,Cheap,Overvalued,48.84661911569308
+DMART,Avenue Supermarts Ltd,Consumer Discretionary,0.0,,309.0,50,Cheap,Overvalued,48.747609214702976
+SUNPHARMA,Sun Pharmaceuticals Industries Ltd,Healthcare,0.0,,288.0,50,Cheap,Overvalued,48.64859931371288
+HAVELLS,Havells India Ltd,Industrials,0.0,,124.0,50,Cheap,Overvalued,48.54958941272278
+DLF,DLF Ltd,Real Estate,0.0,,163.0,50,Cheap,Overvalued,48.508529424371005
+PIDILITIND,Pidilite Industries Ltd,Materials,0.0,,171.0,50,Cheap,Overvalued,48.45057951173268
+HDFCLIFE,HDFC Life Insurance Company Ltd,Financials,0.0,,73.0,50,Cheap,Overvalued,48.25255970975248
+TECHM,Tech Mahindra Ltd,Information Technology,0.0,,270.0,50,Cheap,Overvalued,48.05453990777229
+SHREECEM,Shree Cement Ltd,Materials,0.0,,5787.0,50,Cheap,Overvalued,47.95553000678218
+COALINDIA,Coal India Ltd,Materials,0.0,,156.0,50,Cheap,Overvalued,47.856520105792086
+HCLTECH,HCL Technologies Ltd,Information Technology,0.0,,254.0,50,Cheap,Overvalued,47.75751020480199
+TCS,Tata Consultancy Services Ltd,Information Technology,0.0,,281.0,50,Cheap,Overvalued,47.65850030381189
+NESTLEIND,Nestle India Ltd,Consumer Staples,0.0,,41.0,50,Cheap,Overvalued,47.55949040282179
+INFY,Infosys Ltd,Information Technology,0.0,,218.0,50,Cheap,Overvalued,47.46048050183169
+JINDALSTEL,Jindal Steel & Power Ltd,Materials,0.0,,464.0,50,Cheap,Overvalued,47.320410612489816
+LT,Larsen & Toubro Ltd,Industrials,0.0,,635.0,50,Cheap,Overvalued,47.21295574935644
+LTIM,LTIMindtree Ltd,Information Technology,0.0,,711.0,50,Cheap,Overvalued,47.21295574935644
+BHEL,Bharat Heavy Electricals Limited,Industrials,0.0,,70.0,50,Cheap,Overvalued,47.122390810509614
+ASIANPAINT,"Asian Paints
+Indian Multi-National Paint and Coating Manufacturing Company",Materials,0.0,,188.0,50,Cheap,Overvalued,47.06444089787129
+TATACONSUM,Tata Consumer Products Ltd,Consumer Staples,0.0,,193.0,50,Cheap,Overvalued,46.9654309968812
+DRREDDY,Dr Reddys Laboratories Ltd,Healthcare,0.0,,369.0,50,Cheap,Overvalued,46.8664210958911
+DABUR,Dabur India Ltd,Consumer Staples,0.0,,59.0,50,Cheap,Overvalued,46.767411194900994
+BAJAJ-AUTO,Bajaj Auto Ltd,Consumer Discretionary,0.0,,1109.0,50,Cheap,Overvalued,46.6684012939109
+GAIL,GAIL (India) Ltd,Energy,0.0,,127.0,50,Cheap,Overvalued,46.5693913929208
+ULTRACEMCO,ULTRACEMCO,,0.0,,,50,Cheap,Overvalued,46.371371590940605
+ADANIPOWER,Adani Power Ltd,Energy,0.0,,145.0,50,Cheap,Overvalued,46.33031160258883
+GODREJCP,Godrej Consumer Products Ltd,Consumer Staples,0.0,,119.0,50,Cheap,Overvalued,46.2723616899505
+ATGL,Adani Total Gas Ltd,Energy,0.0,,36.0,50,Cheap,Overvalued,46.07434188797031
+TRENT,Trent Ltd,Consumer Discretionary,0.0,,132.0,50,Cheap,Overvalued,45.8763220859901
+TORNTPHARM,Torrent Pharmaceuticals Ltd,Healthcare,0.0,,222.0,50,Cheap,Overvalued,45.77731218500001
+RELIANCE,Reliance Industries Ltd,Energy,0.0,,606.0,50,Cheap,Overvalued,45.67830228400991
+IOC,Indian Oil Corporation,Energy,0.0,,129.0,50,Cheap,Overvalued,45.63724229565813
+LODHA,Macrotech Developers Ltd,Real Estate,0.0,,183.0,50,Cheap,Overvalued,45.57929238301981
+HINDALCO,Hindalco Industries Ltd,Materials,0.0,,153.0,50,Cheap,Overvalued,45.48028248202971
+TATAMOTORS,Tata Motors Ltd,Consumer Discretionary,0.0,,275.0,50,Cheap,Overvalued,45.43922249367794
+ONGC,Oil & Natural Gas Corpn Ltd,Energy,0.0,,275.0,50,Cheap,Overvalued,45.38127258103961
+HAL,Hindustan Aeronautics Ltd,Industrials,0.0,,465.0,50,Cheap,Overvalued,45.28226268004951
+BPCL,Bharat Petroleum Corporation Ltd,Energy,0.0,,178.0,50,Cheap,Overvalued,45.08424287806931
+MOTHERSON,Samvardhana Motherson International Ltd,Consumer Discretionary,0.0,,46.0,50,Cheap,Overvalued,44.985232977079214
+NHPC,NHPC Ltd,Energy,0.0,,40.0,50,Cheap,Overvalued,44.88622307608912
+M&M,Mahindra & Mahindra Ltd,Consumer Discretionary,0.0,,567.0,50,Cheap,Overvalued,44.84516308773734
+BEL,Bharat Electronics Ltd,Industrials,0.0,,24.0,50,Cheap,Overvalued,44.78721317509902
+BRITANNIA,Britannia Industries Ltd,Consumer Staples,0.0,,133.0,50,Cheap,Overvalued,44.68820327410892
+ADANIPORTS,Adani Ports & Special Economic Zone Ltd,Industrials,0.0,,265.0,50,Cheap,Overvalued,44.58919337311882
+APOLLOHOSP,"Apollo Hospitals
+Chain of Indian private hospitals",Healthcare,0.0,,522.0,50,Cheap,Overvalued,44.39117357113862
+TATASTEEL,Tata Steel Ltd,Materials,0.0,,72.0,50,Cheap,Overvalued,44.19315376915842
+JSWENERGY,JSW Energy Ltd,Energy,0.0,,160.0,50,Cheap,Overvalued,44.09414386816832
+BHARTIARTL,Bharti Airtel Ltd,Communication Services,0.0,,153.0,50,Cheap,Overvalued,44.05308387981655
+JSWSTEEL,JSW Steel Ltd,Materials,0.0,,326.0,50,Cheap,Overvalued,43.99513396717823
+POWERGRID,Power Grid Corporation of India Ltd,Energy,0.0,,99.0,50,Cheap,Overvalued,43.89612406618813
+NTPC,NTPC Ltd,Energy,0.0,,174.0,50,Cheap,Overvalued,43.797114165198025
+GRASIM,Grasim Industries Ltd,Industrials,0.0,,1411.0,50,Cheap,Overvalued,43.59909436321783
+TATAPOWER,Tata Power Company Ltd,Energy,0.0,,105.0,50,Cheap,Overvalued,43.500084462227726
+ADANIGREEN,Adani Green Energy Ltd,Energy,0.0,,67.0,50,Cheap,Overvalued,43.45902447387596
+ADANIENSOL,Adani Energy Solutions Ltd,Energy,0.0,,175.0,50,Cheap,Overvalued,43.40107456123763
+TVSMOTOR,TVS Motor Company Ltd,Consumer Discretionary,0.0,,,50,Cheap,Overvalued,43.30206466024753
+ADANIENT,Adani Enterprises Ltd,Industrials,0.0,,363.0,50,Cheap,Overvalued,43.20305475925744
+TITAN,Titan Company Ltd,Consumer Discretionary,0.0,,110.0,50,Cheap,Overvalued,43.00503495727723
+BAJFINANCE,Bajaj Finance Ltd,Financials,0.0,,1402.0,50,Cheap,Overvalued,42.70800525430694
+SHRIRAMFIN,Shriram Finance Ltd,Financials,0.0,,279.0,50,Cheap,Overvalued,42.60899535331684
+BAJAJFINSV,Bajaj Finserv Ltd,Financials,0.0,,428.0,50,Cheap,Overvalued,42.41097555133664
+RECLTD,REC Ltd,Financials,0.0,,279.0,50,Cheap,Overvalued,42.11394584836634
+CHOLAFIN,Cholamandalam Investment & Finance Company Ltd,Financials,0.0,,255.0,50,Cheap,Overvalued,41.81691614539604
+IRFC,Indian Railway Finance Corporation Ltd,Financials,0.0,,39.0,50,Cheap,Overvalued,41.717906244405945
+PFC,Power Finance Corporation Ltd,Financials,0.0,,333.0,50,Cheap,Overvalued,41.51988644242575

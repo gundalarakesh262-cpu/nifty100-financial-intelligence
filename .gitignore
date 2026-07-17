@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Virtual environment
+env/
+.venv/
+
+# VS Code
+.vscode/
+
+# Logs
+logs/
+
+# Temporary files
+tmp/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Large demo package
+output/demo_package.zip

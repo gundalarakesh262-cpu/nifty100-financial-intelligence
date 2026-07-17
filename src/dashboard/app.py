@@ -2,263 +2,415 @@ import sys
 from pathlib import Path
 
 import pandas as pd
-import plotly.express as px
 import streamlit as st
 
-# MUST be the first Streamlit command
+# ---------------------------------------------------
+# PAGE CONFIG (Must be first Streamlit command)
+# ---------------------------------------------------
 st.set_page_config(
-    page_title="Nifty 100 Dashboard",
+    page_title="Nifty 100 Financial Intelligence",
     page_icon="📈",
-    layout="wide"
+    layout="wide",
+    initial_sidebar_state="expanded",
 )
 
+# Hide default Streamlit page navigation
+st.markdown(
+    """
+    <style>
+    [data-testid="stSidebarNav"] {
+        display: none;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True,
+)
+
+# ---------------------------------------------------
+# PATHS
+# ---------------------------------------------------
 PAGE_ROOT = Path(__file__).resolve().parent
+
 if str(PAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PAGE_ROOT))
 
 ROOT = Path(__file__).resolve().parents[2]
-DATA_PATH = ROOT / "output" / "screener_full_ranked_universe.csv"
-PRESETS_PATH = ROOT / "output" / "screener_presets_summary.csv"
+OUTPUT_DIR = ROOT / "output"
+
+SCREENER_FILE = OUTPUT_DIR / "screener_full_ranked_universe.csv"
+PRESETS_FILE = OUTPUT_DIR / "screener_presets_summary.csv"
+EXCEL_FILE = OUTPUT_DIR / "screener_output.xlsx"
 
 
-def format_file_info(path: Path) -> str:
+# ---------------------------------------------------
+# HELPERS
+# ---------------------------------------------------
+def file_info(path: Path):
     if path.exists():
-        mtime = pd.to_datetime(path.stat().st_mtime, unit='s')
-        return f"{path.name} updated {mtime:%Y-%m-%d %H:%M:%S}"
-    return f"{path.name} missing"
+        t = pd.to_datetime(path.stat().st_mtime, unit="s")
+        return f"{path.name} • {t:%d-%b-%Y %H:%M}"
+    return f"{path.name} (Missing)"
 
 
 @st.cache_data
 def load_home_data():
     screener = pd.DataFrame()
     presets = pd.DataFrame()
-    preset_source = "None"
-    data_info = format_file_info(DATA_PATH)
-    excel_path = ROOT / "output" / "screener_output.xlsx"
-    excel_info = format_file_info(excel_path)
 
-    if DATA_PATH.exists():
+    if SCREENER_FILE.exists():
         try:
-            screener = pd.read_csv(DATA_PATH)
+            screener = pd.read_csv(SCREENER_FILE)
         except Exception:
-            screener = pd.DataFrame()
+            pass
 
-    if excel_path.exists():
+    if EXCEL_FILE.exists():
         try:
-            xls = pd.ExcelFile(excel_path)
+            xl = pd.ExcelFile(EXCEL_FILE)
             rows = []
-            for name in xls.sheet_names:
+
+            for sheet in xl.sheet_names:
                 try:
-                    df_sheet = pd.read_excel(xls, sheet_name=name)
-                    rows.append({
-                        'preset_name': name,
-                        'company_count': len(df_sheet)
-                    })
+                    df_sheet = pd.read_excel(xl, sheet_name=sheet)
+                    rows.append(
+                        {
+                            "Preset": sheet,
+                            "Companies": len(df_sheet),
+                        }
+                    )
                 except Exception:
-                    rows.append({'preset_name': name, 'company_count': 0})
+                    rows.append(
+                        {
+                            "Preset": sheet,
+                            "Companies": 0,
+                        }
+                    )
+
             presets = pd.DataFrame(rows)
-            preset_source = f"Excel: {excel_path.name}"
+
         except Exception:
-            presets = pd.DataFrame()
-    else:
-        if PRESETS_PATH.exists():
-            try:
-                presets = pd.read_csv(PRESETS_PATH)
-                preset_source = f"CSV: {PRESETS_PATH.name}"
-            except Exception:
-                presets = pd.DataFrame()
+            pass
 
-    return screener, presets, preset_source, data_info, excel_info
+    elif PRESETS_FILE.exists():
+        try:
+            presets = pd.read_csv(PRESETS_FILE)
+            if len(presets.columns) >= 2:
+                presets.columns = ["Preset", "Companies"]
+        except Exception:
+            pass
 
-# Sidebar
-st.sidebar.title("📈 Nifty 100 Platform")
+    return screener, presets
+
+
+# ---------------------------------------------------
+# SIDEBAR
+# ---------------------------------------------------
+st.sidebar.title("📈 Nifty 100 Dashboard")
 
 page = st.sidebar.radio(
-    "Navigate:",
+    "Navigate",
     [
         "Home",
         "Company Profile",
         "Screener",
+        "Peer Comparison",
         "Sector Analysis",
         "Trends",
-        "Reports"
-    ]
+        "Capital Allocation",
+        "Reports",
+        "Valuation",
+    ],
 )
 
-# ---------------- HOME ----------------
+# ---------------------------------------------------
+# HOME
+# ---------------------------------------------------
 if page == "Home":
     st.title("📊 Nifty 100 Financial Intelligence Platform")
-    st.write("Welcome to the Nifty 100 Dashboard!")
 
-    screener_df, presets_df, preset_source, data_info, excel_info = load_home_data()
-    if st.button("Refresh home data"):
+    screener, presets = load_home_data()
+
+    if st.button("🔄 Refresh"):
         load_home_data.clear()
-        st.experimental_rerun()
+        st.rerun()
 
-    if screener_df.empty:
-        st.warning("Screener output is missing. Run `scripts/run_screener.py` to generate output/screener_full_ranked_universe.csv.")
-        st.markdown("---")
-        st.write("Use the sidebar to navigate to Company Profile, Screener, Sector Analysis, Trends, or Reports once the data is available.")
+    if screener.empty:
+        st.warning(
+            "Run scripts/run_screener.py first to generate the screener."
+        )
     else:
-        screener_df = screener_df.copy()
-        screener_df['year_only'] = screener_df['year'].astype(str).str.extract(r"(\d{4})")[0].astype(str)
-        year_choices = [str(y) for y in range(2019, 2025)]
-        latest_year = screener_df['year_only'].dropna().max() if not screener_df['year_only'].dropna().empty else "2024"
-        selected_year = st.selectbox(
-            "Select year",
-            year_choices,
-            index=year_choices.index(latest_year) if latest_year in year_choices else len(year_choices) - 1,
+        screener = screener.copy()
+
+        screener["company_id"] = (
+            screener.get("company_id", "")
+            .astype(str)
+            .str.strip()
+            .str.upper()
         )
 
-        year_df = screener_df[screener_df['year_only'] == selected_year].copy()
-        if year_df.empty:
-            st.warning(f"No screener data available for {selected_year}. Try another year.")
+        screener["company_name"] = (
+            screener.get("company_name", screener["company_id"])
+            .fillna(screener["company_id"])
+            .astype(str)
+            .str.strip()
+        )
 
-        year_df['broad_sector'] = year_df.get('broad_sector_y').fillna(year_df.get('broad_sector_x')).fillna('Unknown')
-        year_df['peer_group_name'] = year_df.get('peer_group_name', pd.NA)
-        year_df['return_on_equity_pct'] = pd.to_numeric(year_df.get('return_on_equity_pct'), errors='coerce')
-        year_df['net_profit_margin_pct'] = pd.to_numeric(year_df.get('net_profit_margin_pct'), errors='coerce')
-        year_df['composite_score'] = pd.to_numeric(year_df.get('composite_score'), errors='coerce')
+        screener["broad_sector"] = (
+            screener.get("broad_sector_y")
+            .fillna(screener.get("broad_sector_x"))
+            .fillna("Unknown")
+        )
 
-        total_companies = year_df['company_id'].astype(str).str.strip().str.upper().nunique() if not year_df.empty else 0
-        total_sectors = year_df['broad_sector'].dropna().nunique() if not year_df.empty else 0
-        avg_roe = year_df['return_on_equity_pct'].mean() if 'return_on_equity_pct' in year_df.columns else None
-        avg_npm = year_df['net_profit_margin_pct'].mean() if 'net_profit_margin_pct' in year_df.columns else None
-        avg_composite = year_df['composite_score'].mean() if 'composite_score' in year_df.columns else None
-        top_sector = year_df['broad_sector'].value_counts().idxmax() if not year_df.empty else "N/A"
+        screener["peer_group_name"] = screener.get(
+            "peer_group_name", pd.NA
+        )
 
-        st.subheader(f"Year snapshot: {selected_year}")
-        row1, row2 = st.columns(2)
-        with row1:
-            col1, col2, col3 = st.columns(3)
-            col1.metric("Total companies", f"{total_companies:,}")
-            col2.metric("Sectors", f"{total_sectors:,}")
-            col3.metric("Top sector", top_sector)
-        with row2:
-            col4, col5, col6 = st.columns(3)
-            col4.metric("Avg ROE (%)", f"{avg_roe:.2f}" if avg_roe is not None and not pd.isna(avg_roe) else "N/A")
-            col5.metric("Avg NPM (%)", f"{avg_npm:.2f}" if avg_npm is not None and not pd.isna(avg_npm) else "N/A")
-            col6.metric("Avg Composite Score", f"{avg_composite:.2f}" if avg_composite is not None and not pd.isna(avg_composite) else "N/A")
+        screener["return_on_equity_pct"] = pd.to_numeric(
+            screener.get("return_on_equity_pct"), errors="coerce"
+        )
 
-        if not year_df.empty:
+        screener["debt_to_equity"] = pd.to_numeric(
+            screener.get("debt_to_equity"), errors="coerce"
+        )
+
+        screener["composite_score"] = pd.to_numeric(
+            screener.get("composite_score"), errors="coerce"
+        )
+
+        company_count = screener["company_id"].nunique()
+
+        year_series = (
+            screener["year"].astype(str).str.extract(r"(\d{4})")[0]
+            if "year" in screener.columns
+            else pd.Series(dtype="object")
+        )
+
+        latest_year = (
+            year_series.dropna().max()
+            if not year_series.dropna().empty
+            else "N/A"
+        )
+
+        sector_count = screener["broad_sector"].nunique()
+
+        top_preset = "N/A"
+        top_preset_size = "N/A"
+
+        if not presets.empty:
+            preset_row = presets.sort_values(
+                "Companies", ascending=False
+            ).head(1)
+
+            if not preset_row.empty:
+                top_preset = preset_row.iloc[0]["Preset"]
+                top_preset_size = int(preset_row.iloc[0]["Companies"])
+
+        col1, col2, col3 = st.columns(3)
+        col1.metric("Companies", f"{company_count:,}")
+        col2.metric("Latest Year", latest_year)
+        col3.metric("Sectors", f"{sector_count:,}")
+
+        col4, col5, col6 = st.columns(3)
+        col4.metric("Preset Definitions", len(presets))
+        col5.metric("Largest Preset", top_preset)
+        col6.metric("Preset Size", str(top_preset_size))
+
+        st.caption(file_info(SCREENER_FILE))
+
+        if not presets.empty:
             st.markdown("---")
-            st.subheader("Sector distribution")
-            sector_counts = (
-                year_df['broad_sector'].fillna('Unknown').value_counts().reset_index()
-                    .rename(columns={'index': 'broad_sector', 'broad_sector': 'count'})
+            st.subheader("Preset Coverage")
+            st.dataframe(
+                presets.head(10),
+                use_container_width=True,
+                hide_index=True,
             )
-            fig = px.pie(
-                sector_counts,
-                names='broad_sector',
-                values='count',
-                hole=0.45,
-                title=f"Sector share in {selected_year}",
-            )
-            fig.update_traces(textinfo='percent+label')
-            st.plotly_chart(fig, use_container_width=True)
-
-            st.markdown("---")
-            st.subheader("Top 5 companies by composite score")
-            top_quality_cols = [
-                'company_id',
-                'company_name',
-                'broad_sector',
-                'composite_score',
-                'return_on_equity_pct',
-                'net_profit_margin_pct',
-                'revenue_cagr_5y_pct',
-            ]
-            top_quality_cols = [c for c in top_quality_cols if c in year_df.columns]
-            if top_quality_cols:
-                top_quality_df = year_df.sort_values(by='composite_score', ascending=False).head(5)[top_quality_cols]
-                st.dataframe(top_quality_df.reset_index(drop=True), use_container_width=True)
-            else:
-                st.info("Composite score data is unavailable for the selected year.")
 
         st.markdown("---")
-        st.subheader("Quick screener model")
+        st.subheader("Quick Screener")
 
-        screener_df['broad_sector'] = screener_df.get('broad_sector_y').fillna(screener_df.get('broad_sector_x')).fillna('Unknown')
-        screener_df['peer_group_name'] = screener_df.get('peer_group_name', pd.NA)
-        screener_df['return_on_equity_pct'] = pd.to_numeric(screener_df.get('return_on_equity_pct'), errors='coerce')
-        screener_df['debt_to_equity'] = pd.to_numeric(screener_df.get('debt_to_equity'), errors='coerce')
+        sector_choices = ["All"] + sorted(
+            screener["broad_sector"].dropna().astype(str).unique().tolist()
+        )
 
-        sector_choices = ['All'] + sorted(screener_df['broad_sector'].dropna().unique().astype(str).tolist())
-        peer_choices = ['All'] + sorted(screener_df['peer_group_name'].dropna().unique().astype(str).tolist())
+        peer_choices = ["All"] + sorted(
+            screener["peer_group_name"]
+            .dropna()
+            .astype(str)
+            .unique()
+            .tolist()
+        )
 
-        with st.expander("Screener filters", expanded=True):
-            col1, col2, col3 = st.columns(3)
-            with col1:
-                selected_sector = st.selectbox("Sector", sector_choices, index=0)
-                roe_min = st.slider("Min ROE (%)", 0.0, 50.0, 10.0)
-            with col2:
-                selected_peer = st.selectbox("Peer Group", peer_choices, index=0)
-                de_max = st.slider("Max Debt/Equity", 0.0, 10.0, 3.0)
-            with col3:
+        with st.expander("Filters", expanded=True):
+            c1, c2, c3 = st.columns(3)
+
+            with c1:
+                selected_sector = st.selectbox(
+                    "Sector", sector_choices
+                )
+                roe_min = st.slider(
+                    "Min ROE (%)", 0.0, 50.0, 10.0
+                )
+
+            with c2:
+                selected_peer = st.selectbox(
+                    "Peer Group", peer_choices
+                )
+                de_max = st.slider(
+                    "Max Debt/Equity", 0.0, 10.0, 3.0
+                )
+
+            with c3:
                 top_n = st.slider("Top N", 5, 20, 10)
-                search = st.text_input("Search company or ticker")
+                search = st.text_input(
+                    "Search company or ticker"
+                )
 
-        filtered = screener_df
-        if selected_sector != 'All':
-            filtered = filtered[filtered['broad_sector'] == selected_sector]
-        if selected_peer != 'All':
-            filtered = filtered[filtered['peer_group_name'] == selected_peer]
-        filtered = filtered[filtered['return_on_equity_pct'].fillna(-999) >= roe_min]
-        filtered = filtered[filtered['debt_to_equity'].fillna(999) <= de_max]
+        filtered = screener.copy()
+
+        if selected_sector != "All":
+            filtered = filtered[
+                filtered["broad_sector"] == selected_sector
+            ]
+
+        if selected_peer != "All":
+            filtered = filtered[
+                filtered["peer_group_name"] == selected_peer
+            ]
+
+        filtered = filtered[
+            filtered["return_on_equity_pct"].fillna(-999)
+            >= roe_min
+        ]
+
+        filtered = filtered[
+            filtered["debt_to_equity"].fillna(999)
+            <= de_max
+        ]
+
         if search:
             needle = search.strip().lower()
-            filtered = filtered[filtered[['company_id', 'company_name']].astype(str).apply(
-                lambda row: row.str.lower().str.contains(needle, na=False)
-            ).any(axis=1)]
 
-        filtered = filtered.sort_values(by='composite_score', ascending=False).head(top_n)
+            filtered = filtered[
+                filtered[["company_id", "company_name"]]
+                .astype(str)
+                .apply(
+                    lambda row: row.str.lower().str.contains(
+                        needle, na=False
+                    )
+                )
+                .any(axis=1)
+            ]
 
-        st.markdown("---")
-        st.write(f"Showing {len(filtered)} results from the latest screener universe.")
+        filtered = filtered.sort_values(
+            by="composite_score", ascending=False
+        ).head(top_n)
 
-        home_display_cols = [
-            'company_id',
-            'company_name',
-            'broad_sector',
-            'peer_group_name',
-            'composite_score',
-            'return_on_equity_pct',
-            'debt_to_equity',
-            'pe_ratio'
+        st.write(
+            f"Showing {len(filtered)} companies from the screener universe."
+        )
+
+        display_cols = [
+            "company_id",
+            "company_name",
+            "broad_sector",
+            "peer_group_name",
+            "return_on_equity_pct",
+            "debt_to_equity",
+            "composite_score",
         ]
-        home_display_cols = [c for c in home_display_cols if c in filtered.columns]
-        if home_display_cols:
-            display_df = filtered[home_display_cols].copy()
-            for c in display_df.select_dtypes(include=['object']).columns:
-                display_df[c] = display_df[c].fillna('Unknown')
-            st.dataframe(display_df.reset_index(drop=True), use_container_width=True)
-        else:
-            st.info("The screener model columns are missing from the dataset.")
 
-# ---------------- COMPANY PROFILE ----------------
+        display_cols = [
+            c for c in display_cols if c in filtered.columns
+        ]
+
+        display_df = filtered[display_cols].copy()
+
+        for col in display_df.select_dtypes(
+            include=["object", "string"]
+        ).columns:
+            display_df[col] = display_df[col].fillna("Unknown")
+
+        st.dataframe(
+            display_df.reset_index(drop=True),
+            use_container_width=True,
+            hide_index=True,
+        )
+
+        st.caption(file_info(EXCEL_FILE))
+
+
+# ---------------------------------------------------
+# COMPANY PROFILE
+# ---------------------------------------------------
 elif page == "Company Profile":
-    from pages import company_profile as company_profile_page
-    company_profile_page.show()
+    from pages import company_profile
 
-# ---------------- SCREENER ----------------
+    company_profile.show()
+
+
+# ---------------------------------------------------
+# SCREENER
+# ---------------------------------------------------
 elif page == "Screener":
-    from pages import screener as screener_page
-    screener_page.show()
+    from pages import screener
 
-# ---------------- SECTOR ANALYSIS ----------------
+    screener.show()
+
+
+# ---------------------------------------------------
+# PEER COMPARISON
+# ---------------------------------------------------
+elif page == "Peer Comparison":
+    from pages import peers
+
+    peers.show()
+
+
+# ---------------------------------------------------
+# SECTOR ANALYSIS
+# ---------------------------------------------------
 elif page == "Sector Analysis":
-    from pages import sector_analysis as sector_analysis_page
-    sector_analysis_page.show()
+    from pages import sector_analysis
 
-# ---------------- TRENDS ----------------
+    sector_analysis.show()
+
+
+# ---------------------------------------------------
+# TRENDS
+# ---------------------------------------------------
 elif page == "Trends":
-    from pages import trends as trends_page
-    trends_page.show()
+    from pages import trends
 
-# ---------------- REPORTS ----------------
+    trends.show()
+
+
+# ---------------------------------------------------
+# CAPITAL ALLOCATION
+# ---------------------------------------------------
+elif page == "Capital Allocation":
+    from pages import capital
+
+    capital.show()
+
+
+# ---------------------------------------------------
+# REPORTS
+# ---------------------------------------------------
 elif page == "Reports":
-    from pages import reports as reports_page
-    reports_page.show()
+    from pages import reports
 
+    reports.show()
+
+
+# ---------------------------------------------------
+# VALUATION
+# ---------------------------------------------------
+elif page == "Valuation":
+    from pages import valuation
+
+    valuation.show()
+
+
+# ---------------------------------------------------
 st.markdown("---")
-st.caption("© 2026 | Nifty 100 Financial Intelligence Platform v1.0")
+st.caption("© 2026 | Nifty 100 Financial Intelligence Platform")
