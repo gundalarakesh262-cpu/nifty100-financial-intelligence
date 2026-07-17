@@ -191,8 +191,14 @@ def export_capital_allocation(data_path: str = 'data/processed', output_path: st
     pl['year_parsed'] = pl['year'].apply(parse_year_date)
 
     merged = cf.merge(pl[['company_id', 'year_parsed', 'net_profit']], on=['company_id', 'year_parsed'], how='left')
+    
+    # Rename columns to match expected keys: operating_activity -> cfo, investing_activity -> cfi, financing_activity -> cff
+    merged['cfo'] = merged['operating_activity']
+    merged['cfi'] = merged['investing_activity']
+    merged['cff'] = merged['financing_activity']
+    
     merged['cfo_pat_ratio'] = merged.apply(
-        lambda row: cfo_pat_ratio(row.get('operating_activity'), row.get('net_profit')),
+        lambda row: cfo_pat_ratio(row.get('cfo'), row.get('net_profit')),
         axis=1,
     )
 
