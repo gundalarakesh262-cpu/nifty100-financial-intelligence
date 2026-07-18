@@ -1,6 +1,7 @@
 import pandas as pd
 import streamlit as st
 import plotly.express as px
+import re
 from pathlib import Path
 
 from src.etl.normaliser import normalize_year
@@ -19,16 +20,50 @@ def parse_year_date(value: str) -> pd.Timestamp:
 
     normalized = normalize_year(year_str)
     if normalized:
-        parsed = pd.to_datetime(normalized, format="%Y-%m", errors="coerce")
-        if pd.notna(parsed):
-            return parsed
+        try:
+            year_part, month_part = normalized.split("-")
+            return pd.Timestamp(year=int(year_part), month=int(month_part), day=1)
+        except Exception:
+            return pd.NaT
 
-    for fmt in ("%b %Y", "%b-%y", "%b-%Y", "%b %y", "%Y"):
-        parsed = pd.to_datetime(year_str, format=fmt, errors="coerce")
-        if pd.notna(parsed):
-            return parsed
+    month_map = {
+        "JAN": 1,
+        "FEB": 2,
+        "MAR": 3,
+        "APR": 4,
+        "MAY": 5,
+        "JUN": 6,
+        "JUL": 7,
+        "AUG": 8,
+        "SEP": 9,
+        "OCT": 10,
+        "NOV": 11,
+        "DEC": 12,
+    }
 
-    return pd.to_datetime(year_str, errors="coerce")
+    match = re.match(r"^([A-Z]{3})[\s-]+(\d{2,4})$", year_str.upper())
+    if match:
+        month_text, year_text = match.groups()
+        month = month_map.get(month_text)
+        if month is not None:
+            year = int(year_text)
+            if year < 100:
+                year += 2000
+            return pd.Timestamp(year=year, month=month, day=1)
+
+    match = re.match(r"^(\d{4})$", year_str)
+    if match:
+        return pd.Timestamp(year=int(match.group(1)), month=3, day=1)
+
+    return pd.NaT
+
+
+def display_value(value, fallback: str = "N/A") -> str:
+    if pd.isna(value):
+        return fallback
+
+    text = str(value).strip()
+    return text if text else fallback
 
 
 @st.cache_data
@@ -92,22 +127,22 @@ def show():
 
     c1.metric(
         "Operating",
-        latest["cfo_sign"]
+        display_value(latest.get("cfo_sign"))
     )
 
     c2.metric(
         "Investing",
-        latest["cfi_sign"]
+        display_value(latest.get("cfi_sign"))
     )
 
     c3.metric(
         "Financing",
-        latest["cff_sign"]
+        display_value(latest.get("cff_sign"))
     )
 
     c4.metric(
         "Pattern",
-        latest["pattern_label"]
+        display_value(latest.get("pattern_label"))
     )
 
     st.markdown("---")
@@ -116,7 +151,7 @@ def show():
 
     history_df = company_df.drop(columns=["year_date"]) if "year_date" in company_df.columns else company_df
     st.dataframe(
-        history_df.reset_index(drop=True),
+        history_df.fillna("N/A").reset_index(drop=True),
         use_container_width=True
     )
 
