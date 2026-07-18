@@ -31,6 +31,7 @@ from src.analytics.ratios import (
     net_profit_margin,
     operating_profit_margin,
     roe,
+    roce,
 )
 from src.etl.normaliser import normalize_year
 
@@ -148,6 +149,7 @@ def build_ratio_dataframe(data_path: str = 'data/processed') -> pd.DataFrame:
                 'net_profit_margin_pct': net_profit_margin(row['net_profit'], row['sales']),
                 'operating_profit_margin_pct': operating_profit_margin(row['operating_profit'], row['sales']),
                 'return_on_equity_pct': roe(row['net_profit'], row['equity_capital'], row['reserves']),
+                'return_on_capital_employed_pct': roce(row['operating_profit'], row['equity_capital'], row['reserves'], row['borrowings']),
                 'debt_to_equity': debt_to_equity(row['borrowings'], row['equity_capital'], row['reserves']),
                 'interest_coverage': interest_coverage_ratio(row['operating_profit'], row['other_income'], row['interest']),
                 'asset_turnover': asset_turnover(row['sales'], row['total_assets']),

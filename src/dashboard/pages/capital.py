@@ -8,12 +8,12 @@ DATA_PATH = ROOT / "output" / "capital_allocation.csv"
 
 
 @st.cache_data
-def load_capital():
+def load_capital(path: Path, modified: float):
 
-    if not DATA_PATH.exists():
+    if not path.exists():
         return pd.DataFrame()
 
-    df = pd.read_csv(DATA_PATH)
+    df = pd.read_csv(path)
 
     df["company_id"] = (
         df["company_id"]
@@ -23,7 +23,20 @@ def load_capital():
     )
 
     if "year" in df.columns:
-        df["year"] = pd.to_numeric(df["year"], errors="coerce")
+        df["year"] = df["year"].astype(str).str.strip()
+        df["year_date"] = pd.to_datetime(
+            df["year"], infer_datetime_format=True, errors="coerce"
+        )
+        missing = df["year_date"].isna()
+        if missing.any():
+            df.loc[missing, "year_date"] = pd.to_datetime(
+                df.loc[missing, "year"], format="%b %Y", errors="coerce"
+            )
+        missing = df["year_date"].isna()
+        if missing.any():
+            df.loc[missing, "year_date"] = pd.to_datetime(
+                df.loc[missing, "year"], format="%b-%y", errors="coerce"
+            )
 
     return df
 
@@ -33,7 +46,10 @@ def show():
     st.title("💰 Capital Allocation Dashboard")
     st.write("Analyze how companies allocate operating, investing and financing cash flows.")
 
-    df = load_capital()
+    df = load_capital(
+        DATA_PATH,
+        DATA_PATH.stat().st_mtime if DATA_PATH.exists() else 0.0,
+    )
 
     if df.empty:
         st.warning("capital_allocation.csv not found.")
@@ -46,12 +62,17 @@ def show():
         companies
     )
 
-    company_df = (
-        df[df["company_id"] == company]
-        .sort_values("year")
-    )
+    company_df = df[df["company_id"] == company].copy()
+    if company_df.empty:
+        st.warning("No capital allocation rows found for the selected company.")
+        return
 
-    latest = company_df.iloc[-1]
+    if "year_date" in company_df.columns and not company_df["year_date"].isna().all():
+        company_df = company_df.sort_values("year_date")
+        latest = company_df.loc[company_df["year_date"].idxmax()]
+    else:
+        company_df = company_df.sort_values("year")
+        latest = company_df.iloc[-1]
 
     st.markdown("### Latest Capital Allocation")
 
@@ -81,8 +102,9 @@ def show():
 
     st.subheader("Capital Allocation History")
 
+    history_df = company_df.drop(columns=["year_date"]) if "year_date" in company_df.columns else company_df
     st.dataframe(
-        company_df.reset_index(drop=True),
+        history_df.reset_index(drop=True),
         use_container_width=True
     )
 
@@ -107,9 +129,10 @@ def show():
         "-": -1
     })
 
+    x_axis = "year_date" if "year_date" in chart_df.columns else "year"
     fig = px.line(
         chart_df,
-        x="year",
+        x=x_axis,
         y=["CFO", "CFI", "CFF"],
         markers=True,
         title="Cash Flow Sign Trend"

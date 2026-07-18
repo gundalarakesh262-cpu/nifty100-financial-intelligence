@@ -22,6 +22,21 @@ def load_screener_data() -> pd.DataFrame:
     df['broad_sector'] = df.get('broad_sector_y').fillna(df.get('broad_sector_x'))
     df['broad_sector'] = df['broad_sector'].fillna('Unknown')
     df['year'] = pd.to_numeric(df['year'], errors='coerce')
+
+    numeric_cols = [
+        'return_on_equity_pct',
+        'return_on_capital_employed_pct',
+        'net_profit_margin_pct',
+        'debt_to_equity',
+        'pe_ratio',
+        'pb_ratio',
+        'free_cash_flow_cr',
+        'composite_score',
+    ]
+    for col in numeric_cols:
+        if col in df.columns:
+            df[col] = pd.to_numeric(df[col], errors='coerce')
+
     return df
 
 
@@ -155,21 +170,28 @@ def show() -> None:
 
     st.markdown("---")
     st.subheader("ROE vs ROCE history")
-    trend_rows = company_rows[['year', 'return_on_equity_pct', 'return_on_capital_employed_pct']].dropna(subset=['year'])
-    if not trend_rows.empty:
-        trend_rows = trend_rows.sort_values(by='year')
-        fig = px.line(
-            trend_rows,
-            x='year',
-            y=['return_on_equity_pct', 'return_on_capital_employed_pct'],
-            labels={
-                'value': 'Percentage',
-                'variable': 'Metric',
-                'year': 'Year'
-            },
-            title=f"ROE and ROCE trend - {company_id}"
-        )
-        st.plotly_chart(fig, use_container_width=True)
+    trend_cols = ['year', 'return_on_equity_pct', 'return_on_capital_employed_pct']
+    available_trend_cols = [c for c in trend_cols if c in company_rows.columns]
+
+    if 'year' in available_trend_cols and len(available_trend_cols) > 1:
+        trend_rows = company_rows[available_trend_cols].dropna(subset=['year'])
+        metrics = [c for c in available_trend_cols if c != 'year']
+        if metrics:
+            trend_rows = trend_rows.sort_values(by='year')
+            fig = px.line(
+                trend_rows,
+                x='year',
+                y=metrics,
+                labels={
+                    'value': 'Percentage',
+                    'variable': 'Metric',
+                    'year': 'Year'
+                },
+                title=f"ROE and ROCE trend - {company_id}"
+            )
+            st.plotly_chart(fig, use_container_width=True)
+        else:
+            st.info("ROE/ROCE trend data is unavailable for this company.")
     else:
         st.info("ROE/ROCE trend data is unavailable for this company.")
 
