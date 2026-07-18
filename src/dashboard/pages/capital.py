@@ -3,8 +3,32 @@ import streamlit as st
 import plotly.express as px
 from pathlib import Path
 
+from src.etl.normaliser import normalize_year
+
 ROOT = Path(__file__).resolve().parents[3]
 DATA_PATH = ROOT / "output" / "capital_allocation.csv"
+
+
+def parse_year_date(value: str) -> pd.Timestamp:
+    if pd.isna(value):
+        return pd.NaT
+
+    year_str = str(value).strip()
+    if not year_str:
+        return pd.NaT
+
+    normalized = normalize_year(year_str)
+    if normalized:
+        parsed = pd.to_datetime(normalized, format="%Y-%m", errors="coerce")
+        if pd.notna(parsed):
+            return parsed
+
+    for fmt in ("%b %Y", "%b-%y", "%b-%Y", "%b %y", "%Y"):
+        parsed = pd.to_datetime(year_str, format=fmt, errors="coerce")
+        if pd.notna(parsed):
+            return parsed
+
+    return pd.to_datetime(year_str, errors="coerce")
 
 
 @st.cache_data
@@ -24,19 +48,7 @@ def load_capital(path: Path, modified: float):
 
     if "year" in df.columns:
         df["year"] = df["year"].astype(str).str.strip()
-        df["year_date"] = pd.to_datetime(
-            df["year"], infer_datetime_format=True, errors="coerce"
-        )
-        missing = df["year_date"].isna()
-        if missing.any():
-            df.loc[missing, "year_date"] = pd.to_datetime(
-                df.loc[missing, "year"], format="%b %Y", errors="coerce"
-            )
-        missing = df["year_date"].isna()
-        if missing.any():
-            df.loc[missing, "year_date"] = pd.to_datetime(
-                df.loc[missing, "year"], format="%b-%y", errors="coerce"
-            )
+        df["year_date"] = df["year"].apply(parse_year_date)
 
     return df
 
