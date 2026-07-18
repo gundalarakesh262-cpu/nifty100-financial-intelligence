@@ -30,11 +30,14 @@ st.markdown(
 # PATHS
 # ---------------------------------------------------
 PAGE_ROOT = Path(__file__).resolve().parent
+ROOT = Path(__file__).resolve().parents[2]
 
 if str(PAGE_ROOT) not in sys.path:
     sys.path.insert(0, str(PAGE_ROOT))
 
-ROOT = Path(__file__).resolve().parents[2]
+if str(ROOT) not in sys.path:
+    sys.path.insert(0, str(ROOT))
+
 OUTPUT_DIR = ROOT / "output"
 
 SCREENER_FILE = OUTPUT_DIR / "screener_full_ranked_universe.csv"
