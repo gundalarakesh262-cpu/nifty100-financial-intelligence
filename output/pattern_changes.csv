@@ -1,0 +1,55 @@
+company_id,previous_year,latest_year,previous_pattern,latest_pattern
+ADANIENSOL,Mar 2023,Mar 2024,Mixed,Shareholder Returns
+ADANIENT,Mar 2023,Mar 2024,Shareholder Returns,Mixed
+ADANIGREEN,Mar 2023,Mar 2024,Shareholder Returns,Mixed
+AGTL,Mar 2023,Mar 2024,Mixed,Reinvestor
+ASIANPAINT,Mar 2023,Mar 2024,Reinvestor,Shareholder Returns
+AXISBANK,Mar 2023,Mar 2024,Mixed,Growth Funded by Debt
+BANKBARODA,Mar 2023,Mar 2024,Pre-Revenue,Growth Funded by Debt
+BEL,Mar 2023,Mar 2024,Liquidating Assets,Shareholder Returns
+BRITANNIA,Mar 2023,Mar 2024,Shareholder Returns,Liquidating Assets
+CANBK,Mar 2023,Mar 2024,Growth Funded by Debt,Reinvestor
+CIPLA,Mar 2023,Mar 2024,Shareholder Returns,Reinvestor
+COALINDIA,Mar 2023,Mar 2024,Shareholder Returns,Reinvestor
+DABUR,Mar 2023,Mar 2024,Reinvestor,Shareholder Returns
+DIVISLAB,Mar 2023,Mar 2024,Shareholder Returns,Reinvestor
+DLF,Mar 2023,Mar 2024,Shareholder Returns,Mixed
+DRREDDY,Mar 2023,Mar 2024,Shareholder Returns,Reinvestor
+GAIL,Mar 2023,Mar 2024,Mixed,Shareholder Returns
+GODREJCP,Mar 2023,Mar 2024,Shareholder Returns,Mixed
+HAVELLS,Mar 2023,Mar 2024,Liquidating Assets,Shareholder Returns
+HDFCBANK,Mar 2023,Mar 2024,Mixed,Liquidating Assets
+HDFCLIFE,Mar 2023,Mar 2024,Mixed,Shareholder Returns
+HEROMOTOCO,Mar 2023,Mar 2024,Reinvestor,Shareholder Returns
+HINDUNILVR,Mar 2023,Mar 2024,Reinvestor,Shareholder Returns
+ICICIBANK,Mar 2023,Mar 2024,Growth Funded by Debt,Mixed
+ICICIPRULI,Mar 2023,Mar 2024,Reinvestor,Mixed
+INDIGO,Mar 2023,Mar 2024,Reinvestor,Shareholder Returns
+INDUSINDBK,Mar 2023,Mar 2024,Growth Funded by Debt,Pre-Revenue
+IRFC,Mar 2023,Mar 2024,Distress Signal,Shareholder Returns
+ITC,Mar 2023,Mar 2024,Reinvestor,Liquidating Assets
+JINDALSTEL,Mar 2023,Mar 2024,Shareholder Returns,Mixed
+JIOFIN,Mar 2023,Mar 2024,Shareholder Returns,Mixed
+KOTAKBANK,Mar 2023,Mar 2024,Growth Funded by Debt,Mixed
+LICI,Mar 2023,Mar 2024,Shareholder Returns,Reinvestor
+LODHA,Mar 2023,Mar 2024,Liquidating Assets,Mixed
+LT,Mar 2023,Mar 2024,Shareholder Returns,Liquidating Assets
+LTIM,Mar 2023,Mar 2024,Reinvestor,Shareholder Returns
+MOTHERSON,Mar 2023,Mar 2024,Shareholder Returns,Mixed
+PNB,Mar 2023,Mar 2024,Mixed,Growth Funded by Debt
+RELIANCE,Mar 2023,Mar 2024,Mixed,Shareholder Returns
+SBIN,Mar 2023,Mar 2024,Growth Funded by Debt,Reinvestor
+SHRIRAMFIN,Mar 2023,Mar 2024,Distress Signal,Growth Funded by Debt
+SUNPHARMA,Mar 2023,Mar 2024,Mixed,Shareholder Returns
+TATACONSUM,Mar 2023,Mar 2024,Shareholder Returns,Mixed
+TATAPOWER,Mar 2023,Mar 2024,Mixed,Shareholder Returns
+TATASTEEL,Mar 2023,Mar 2024,Shareholder Returns,Reinvestor
+TITAN,Mar 2023,Mar 2024,Mixed,Reinvestor
+TORNTPHARM,Mar 2023,Mar 2024,Mixed,Shareholder Returns
+TRENT,Mar 2023,Mar 2024,Shareholder Returns,Reinvestor
+UNIONBANK,Mar 2023,Mar 2024,Reinvestor,Shareholder Returns
+UNITDSPR,Mar 2023,Mar 2024,Reinvestor,Liquidating Assets
+VBL,Dec 2022,Dec 2023,Shareholder Returns,Mixed
+WIPRO,Mar 2023,Mar 2024,Shareholder Returns,Liquidating Assets
+ZOMATO,Mar 2023,Mar 2024,Mixed,Shareholder Returns
+ZYDUSLIFE,Mar 2023,Mar 2024,Liquidating Assets,Reinvestor

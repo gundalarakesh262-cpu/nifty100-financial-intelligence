@@ -1,0 +1,342 @@
+company_id,type,rule_id,text,confidence_pct
+ABB,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ABB,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ABB,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+ADANIENSOL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ADANIENSOL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ADANIENSOL,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+ADANIENT,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ADANIENT,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ADANIENT,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+ADANIGREEN,con,C01,Debt-to-equity ratio of 6.38 is elevated for a non-financial company and warrants monitoring,79
+ADANIGREEN,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ADANIGREEN,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ADANIGREEN,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+ADANIPORTS,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ADANIPORTS,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ADANIPORTS,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+ADANIPOWER,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ADANIPOWER,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ADANIPOWER,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+AMBUJACEM,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+AMBUJACEM,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+AMBUJACEM,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+APOLLOHOSP,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+APOLLOHOSP,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+APOLLOHOSP,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+APOLLOHOSP,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+ASIANPAINT,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ASIANPAINT,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ASIANPAINT,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+ASIANPAINT,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+ATGL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ATGL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ATGL,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+AXISBANK,con,C01,Debt-to-equity ratio of 8.25 is elevated for a non-financial company and warrants monitoring,79
+AXISBANK,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+AXISBANK,pro,P06,Net profit compounding at above 20% over 5 years creates significant shareholder value,79
+AXISBANK,pro,P05,Operating profit margin above 25% indicates strong pricing power and cost discipline,78
+AXISBANK,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+BAJAJ-AUTO,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BAJAJ-AUTO,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BAJAJ-AUTO,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+BAJAJ-AUTO,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+BAJAJ-AUTO,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+BAJAJFINSV,con,C02,Free cash flow negative for 3 consecutive years raises concern about cash generation quality,83
+BAJAJFINSV,con,C01,Debt-to-equity ratio of 4.66 is elevated for a non-financial company and warrants monitoring,79
+BAJAJFINSV,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BAJAJFINSV,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BAJAJFINSV,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+BAJAJHLDNG,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BAJAJHLDNG,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BAJAJHLDNG,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+BAJAJHLDNG,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+BAJFINANCE,con,C02,Free cash flow negative for 3 consecutive years raises concern about cash generation quality,83
+BAJFINANCE,con,C01,Debt-to-equity ratio of 3.74 is elevated for a non-financial company and warrants monitoring,79
+BAJFINANCE,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BAJFINANCE,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BAJFINANCE,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+BANKBARODA,con,C01,Debt-to-equity ratio of 12.14 is elevated for a non-financial company and warrants monitoring,79
+BANKBARODA,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BANKBARODA,pro,P06,Net profit compounding at above 20% over 5 years creates significant shareholder value,79
+BANKBARODA,pro,P05,Operating profit margin above 25% indicates strong pricing power and cost discipline,78
+BANKBARODA,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+BEL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BEL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BEL,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+BHARTIARTL,con,C01,Debt-to-equity ratio of 2.59 is elevated for a non-financial company and warrants monitoring,79
+BHARTIARTL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BHARTIARTL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BHARTIARTL,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+BHEL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BHEL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BHEL,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+BOSCHLTD,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BOSCHLTD,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BOSCHLTD,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+BOSCHLTD,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+BPCL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BPCL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BPCL,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+BRITANNIA,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+BRITANNIA,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+BRITANNIA,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+CANBK,con,C01,Debt-to-equity ratio of 14.87 is elevated for a non-financial company and warrants monitoring,79
+CANBK,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+CANBK,pro,P06,Net profit compounding at above 20% over 5 years creates significant shareholder value,79
+CANBK,pro,P05,Operating profit margin above 25% indicates strong pricing power and cost discipline,78
+CANBK,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+CANBK,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+CHOLAFIN,con,C02,Free cash flow negative for 3 consecutive years raises concern about cash generation quality,83
+CHOLAFIN,con,C01,Debt-to-equity ratio of 7.38 is elevated for a non-financial company and warrants monitoring,79
+CHOLAFIN,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+CHOLAFIN,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+CHOLAFIN,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+CIPLA,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+CIPLA,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+CIPLA,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+CIPLA,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+COALINDIA,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+COALINDIA,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+COALINDIA,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+COALINDIA,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+COALINDIA,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+DABUR,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+DABUR,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+DABUR,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+DABUR,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+DIVISLAB,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+DIVISLAB,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+DIVISLAB,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+DLF,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+DLF,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+DLF,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+DLF,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+DMART,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+DMART,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+DMART,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+DRREDDY,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+DRREDDY,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+DRREDDY,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+DRREDDY,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+EICHERMOT,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+EICHERMOT,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+EICHERMOT,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+EICHERMOT,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+EICHERMOT,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+GAIL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+GAIL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+GAIL,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+GODREJCP,con,C04,Company reported a net loss in the most recent financial year,85
+GODREJCP,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+GODREJCP,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+GODREJCP,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+GRASIM,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+GRASIM,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+GRASIM,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+HAL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+HAL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+HAL,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+HAVELLS,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+HAVELLS,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+HAVELLS,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+HCLTECH,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+HCLTECH,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+HCLTECH,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+HDFCBANK,con,C06,Interest coverage ratio below 1.5x indicates the company is at risk of not meeting its debt obligations,80
+HDFCBANK,con,C01,Debt-to-equity ratio of 6.81 is elevated for a non-financial company and warrants monitoring,79
+HDFCBANK,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+HDFCBANK,pro,P06,Net profit compounding at above 20% over 5 years creates significant shareholder value,79
+HDFCBANK,pro,P05,Operating profit margin above 25% indicates strong pricing power and cost discipline,78
+HDFCBANK,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+HDFCLIFE,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+HDFCLIFE,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+HDFCLIFE,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+HEROMOTOCO,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+HEROMOTOCO,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+HEROMOTOCO,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+HINDALCO,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+HINDALCO,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+HINDALCO,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+HINDUNILVR,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+HINDUNILVR,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+HINDUNILVR,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+HINDUNILVR,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+ICICIBANK,con,C06,Interest coverage ratio below 1.5x indicates the company is at risk of not meeting its debt obligations,80
+ICICIBANK,con,C01,Debt-to-equity ratio of 6.45 is elevated for a non-financial company and warrants monitoring,79
+ICICIBANK,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ICICIBANK,pro,P06,Net profit compounding at above 20% over 5 years creates significant shareholder value,79
+ICICIBANK,pro,P05,Operating profit margin above 25% indicates strong pricing power and cost discipline,78
+ICICIBANK,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+ICICIGI,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ICICIGI,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ICICIGI,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+ICICIGI,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+ICICIPRULI,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ICICIPRULI,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ICICIPRULI,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+INDIGO,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+INDIGO,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+INDIGO,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+INDIGO,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+INDUSINDBK,con,C01,Debt-to-equity ratio of 6.89 is elevated for a non-financial company and warrants monitoring,79
+INDUSINDBK,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+INDUSINDBK,pro,P06,Net profit compounding at above 20% over 5 years creates significant shareholder value,79
+INDUSINDBK,pro,P05,Operating profit margin above 25% indicates strong pricing power and cost discipline,78
+INFY,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+INFY,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+INFY,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+INFY,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+INFY,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+IOC,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+IOC,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+IOC,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+IRCTC,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+IRCTC,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+IRCTC,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+IRFC,con,C01,Debt-to-equity ratio of 7.83 is elevated for a non-financial company and warrants monitoring,79
+IRFC,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+IRFC,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+IRFC,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+ITC,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ITC,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ITC,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+ITC,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+JINDALSTEL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+JINDALSTEL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+JINDALSTEL,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+JIOFIN,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+JIOFIN,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+JSWENERGY,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+JSWENERGY,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+JSWENERGY,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+JSWSTEEL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+JSWSTEEL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+JSWSTEEL,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+KOTAKBANK,con,C06,Interest coverage ratio below 1.5x indicates the company is at risk of not meeting its debt obligations,80
+KOTAKBANK,con,C01,Debt-to-equity ratio of 4.00 is elevated for a non-financial company and warrants monitoring,79
+KOTAKBANK,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+KOTAKBANK,pro,P06,Net profit compounding at above 20% over 5 years creates significant shareholder value,79
+KOTAKBANK,pro,P05,Operating profit margin above 25% indicates strong pricing power and cost discipline,78
+LICI,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+LICI,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+LICI,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+LICI,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+LICI,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+LODHA,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+LODHA,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+LODHA,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+LT,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+LT,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+LT,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+LTIM,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+LTIM,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+LTIM,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+LTIM,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+M&M,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+M&M,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+M&M,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+MARUTI,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+MARUTI,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+MARUTI,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+MOTHERSON,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+MOTHERSON,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+MOTHERSON,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+MOTHERSON,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+NAUKRI,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+NAUKRI,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+NAUKRI,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+NESTLEIND,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+NESTLEIND,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+NESTLEIND,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+NESTLEIND,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+NHPC,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+NHPC,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+NHPC,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+NTPC,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+NTPC,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+NTPC,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+ONGC,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+ONGC,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+ONGC,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+PFC,con,C01,Debt-to-equity ratio of 8.27 is elevated for a non-financial company and warrants monitoring,79
+PFC,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+PFC,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+PFC,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+PIDILITIND,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+PIDILITIND,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+PIDILITIND,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+PNB,con,C06,Interest coverage ratio below 1.5x indicates the company is at risk of not meeting its debt obligations,80
+PNB,con,C01,Debt-to-equity ratio of 3.68 is elevated for a non-financial company and warrants monitoring,79
+PNB,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+PNB,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+PNB,pro,P01,Consistently high return on equity above 20% demonstrates exceptional capital efficiency,88
+PNB,pro,P06,Net profit compounding at above 20% over 5 years creates significant shareholder value,79
+POWERGRID,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+POWERGRID,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+POWERGRID,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+POWERGRID,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+RECLTD,con,C02,Free cash flow negative for 3 consecutive years raises concern about cash generation quality,83
+RECLTD,con,C01,Debt-to-equity ratio of 6.58 is elevated for a non-financial company and warrants monitoring,79
+RECLTD,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+RECLTD,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+RECLTD,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+RELIANCE,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+RELIANCE,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+RELIANCE,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+SBILIFE,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+SBILIFE,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+SBILIFE,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+SBIN,con,C06,Interest coverage ratio below 1.5x indicates the company is at risk of not meeting its debt obligations,80
+SBIN,pro,P06,Net profit compounding at above 20% over 5 years creates significant shareholder value,79
+SBIN,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+SHREECEM,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+SHREECEM,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+SHREECEM,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+SHRIRAMFIN,con,C02,Free cash flow negative for 3 consecutive years raises concern about cash generation quality,83
+SHRIRAMFIN,con,C01,Debt-to-equity ratio of 3.97 is elevated for a non-financial company and warrants monitoring,79
+SHRIRAMFIN,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+SHRIRAMFIN,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+SHRIRAMFIN,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+SIEMENS,con,C00,Residual operational and financial risk remains under review,65
+SIEMENS,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+SIEMENS,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+SIEMENS,pro,P10,Return on equity improving for 3 consecutive years shows strengthening business quality,70
+SUNPHARMA,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+SUNPHARMA,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+SUNPHARMA,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+TATACONSUM,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TATACONSUM,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TATACONSUM,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+TATAMOTORS,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TATAMOTORS,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TATAMOTORS,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+TATAPOWER,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TATAPOWER,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TATAPOWER,pro,P00,Company shows positive operating history and remains investable on the available fundamentals,65
+TATASTEEL,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TATASTEEL,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TATASTEEL,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+TATASTEEL,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+TCS,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TCS,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TCS,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+TECHM,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TECHM,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TECHM,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+TITAN,con,C01,Debt-to-equity ratio of 2.22 is elevated for a non-financial company and warrants monitoring,79
+TITAN,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TITAN,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TITAN,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+TITAN,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+TORNTPHARM,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TORNTPHARM,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TORNTPHARM,pro,P02,Strong free cash flow generation over 5 years signals healthy business fundamentals,84
+TRENT,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TRENT,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TRENT,pro,P12,Growing asset base funded by internal accruals reflects self-sustaining growth,74
+TRENT,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
+TVSMOTOR,con,C02,Free cash flow negative for 3 consecutive years raises concern about cash generation quality,83
+TVSMOTOR,con,C10,Return on capital employed below 10% suggests the business is not generating sufficient returns on invested capital,77
+TVSMOTOR,con,C12,Revenue growing at below 5% over 5 years lags inflation and suggests limited business momentum,71
+TVSMOTOR,pro,P08,Consistent dividend yield above 2% backed by positive free cash flow,72
