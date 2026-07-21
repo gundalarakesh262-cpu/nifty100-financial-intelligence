@@ -43,6 +43,7 @@ OUTPUT_DIR = ROOT / "output"
 SCREENER_FILE = OUTPUT_DIR / "screener_full_ranked_universe.csv"
 PRESETS_FILE = OUTPUT_DIR / "screener_presets_summary.csv"
 EXCEL_FILE = OUTPUT_DIR / "screener_output.xlsx"
+CLUSTER_FILE = OUTPUT_DIR / "cluster_labels.csv"
 
 
 # ---------------------------------------------------
@@ -59,6 +60,7 @@ def file_info(path: Path):
 def load_home_data():
     screener = pd.DataFrame()
     presets = pd.DataFrame()
+    clusters = pd.DataFrame()
 
     if SCREENER_FILE.exists():
         try:
@@ -101,7 +103,13 @@ def load_home_data():
         except Exception:
             pass
 
-    return screener, presets
+    if CLUSTER_FILE.exists():
+        try:
+            clusters = pd.read_csv(CLUSTER_FILE)
+        except Exception:
+            pass
+
+    return screener, presets, clusters
 
 
 # ---------------------------------------------------
@@ -130,7 +138,7 @@ page = st.sidebar.radio(
 if page == "Home":
     st.title("📊 Nifty 100 Financial Intelligence Platform")
 
-    screener, presets = load_home_data()
+    screener, presets, clusters = load_home_data()
 
     if st.button("🔄 Refresh"):
         load_home_data.clear()
@@ -218,6 +226,84 @@ if page == "Home":
         col6.metric("Preset Size", str(top_preset_size))
 
         st.caption(file_info(SCREENER_FILE))
+
+        st.markdown("---")
+        st.subheader("Clustering Snapshot")
+
+        if clusters.empty:
+            st.info(
+                "cluster_labels.csv not found. Run python src/analytics/clustering.py to generate archetype labels."
+            )
+        else:
+            clusters = clusters.copy()
+            clusters["company_id"] = (
+                clusters.get("company_id", "")
+                .astype(str)
+                .str.strip()
+                .str.upper()
+            )
+
+            if "cluster_id" in clusters.columns:
+                clusters["cluster_id"] = pd.to_numeric(
+                    clusters["cluster_id"], errors="coerce"
+                )
+
+            if "distance_from_centroid" in clusters.columns:
+                clusters["distance_from_centroid"] = pd.to_numeric(
+                    clusters["distance_from_centroid"], errors="coerce"
+                )
+
+            cluster_company_count = clusters["company_id"].nunique()
+            cluster_count = (
+                clusters["cluster_id"].nunique()
+                if "cluster_id" in clusters.columns
+                else 0
+            )
+
+            most_populous_cluster = "N/A"
+            if "cluster_name" in clusters.columns:
+                counts = (
+                    clusters["cluster_name"]
+                    .fillna("Unknown")
+                    .value_counts()
+                )
+                if not counts.empty:
+                    most_populous_cluster = (
+                        f"{counts.index[0]} ({int(counts.iloc[0])})"
+                    )
+
+            c7, c8, c9 = st.columns(3)
+            c7.metric("Clustered Companies", f"{cluster_company_count:,}")
+            c8.metric("Archetypes", f"{cluster_count:,}")
+            c9.metric("Largest Archetype", most_populous_cluster)
+
+            st.caption(file_info(CLUSTER_FILE))
+
+            cluster_display_cols = [
+                "company_id",
+                "cluster_id",
+                "cluster_name",
+                "distance_from_centroid",
+            ]
+            cluster_display_cols = [
+                c for c in cluster_display_cols if c in clusters.columns
+            ]
+
+            cluster_preview = clusters[cluster_display_cols].copy()
+            cluster_preview = cluster_preview.sort_values(
+                by=[
+                    c
+                    for c in ["cluster_id", "distance_from_centroid"]
+                    if c in cluster_preview.columns
+                ]
+                or [cluster_preview.columns[0]]
+            )
+
+            st.dataframe(
+                cluster_preview.head(20).reset_index(drop=True),
+                use_container_width=True,
+                hide_index=True,
+            )
 
         if not presets.empty:
             st.markdown("---")

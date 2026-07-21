@@ -97,18 +97,37 @@ def show() -> None:
         st.warning("Screener data is missing. Run the pipeline to generate output/screener_full_ranked_universe.csv.")
         return
 
-    df['company_label'] = df['company_name'].fillna(df['company_id']).astype(str)
-    company_labels = sorted(df['company_label'].unique())
+    company_lookup = (
+        df[['company_id', 'company_name']]
+        .drop_duplicates(subset=['company_id'])
+        .copy()
+    )
+    company_lookup['company_name'] = company_lookup['company_name'].fillna(company_lookup['company_id']).astype(str)
+    company_lookup['company_display'] = company_lookup['company_name'] + " (" + company_lookup['company_id'] + ")"
+    company_lookup = company_lookup.sort_values(by=['company_name', 'company_id']).reset_index(drop=True)
 
     search_text = st.text_input("Search by company name or ticker", "")
-    matches = [label for label in company_labels if search_text.strip().lower() in label.lower()]
-    if search_text and not matches:
+    if search_text.strip():
+        needle = search_text.strip().lower()
+        company_lookup = company_lookup[
+            company_lookup['company_name'].str.lower().str.contains(needle, na=False)
+            | company_lookup['company_id'].str.lower().str.contains(needle, na=False)
+        ]
+
+    if company_lookup.empty:
         st.warning(f"No matching company found for '{search_text.strip()}'. Try another ticker or name.")
         return
 
-    selected_company = st.selectbox("Select company", options=matches if search_text else company_labels)
+    options = company_lookup['company_id'].tolist()
+    display_map = dict(zip(company_lookup['company_id'], company_lookup['company_display']))
 
-    company_rows = df[df['company_label'] == selected_company].sort_values(by='year', ascending=False)
+    selected_company_id = st.selectbox(
+        "Select company",
+        options=options,
+        format_func=lambda cid: display_map.get(cid, cid),
+    )
+
+    company_rows = df[df['company_id'] == selected_company_id].sort_values(by='year', ascending=False)
     if company_rows.empty:
         st.warning("No records found for the selected company.")
         return
