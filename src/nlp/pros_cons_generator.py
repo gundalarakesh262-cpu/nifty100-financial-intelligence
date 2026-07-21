@@ -1,3 +1,4 @@
+
 """Rule-based pros and cons generation for the Nifty100 workspace."""
 
 from __future__ import annotations
